@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import CreateNextCliConfig from "./utils/CreateNextCliConfig/CreateNextCliConfig.js";
-import CreatePage from "./utils/CreatePage/CreatePage.js";
+import NextCliPageCreator from "./utils/CreatePage/CreatePage.js";
 const input = process.argv;
 
 // if input is "init" then run init.js
@@ -14,8 +14,8 @@ else if (input[2] == "help") {
 }
 // if input is "page" then run page.js
 else if (input[2] == "page") {
-  CreatePage(input[3]);
-
+  const createpage = new NextCliPageCreator(input[3]);
+  createpage.run();
 
 }
 // if input is "component" then run component.js
