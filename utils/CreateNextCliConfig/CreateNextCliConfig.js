@@ -3,14 +3,22 @@ import fs from "fs";
 export default function CreateNextCliConfig() {
   const packageJSON = JSON.parse(fs.readFileSync("./package.json", "utf8"));
   const configFile = {
-    using_nextjs: null,
-    using_typescript: null,
-    using_tailwind: null
+    framework: null,
+    language: "javascript",
+    css: "common" // "common | modular | tailwind
   }
 
-  configFile.using_typescript = "typescript" in packageJSON.devDependencies;
-  configFile.using_tailwind = "tailwindcss" in packageJSON.devDependencies;
-  configFile.using_nextjs = "next" in (packageJSON.dependencies ?? {});
+  configFile.language = "typescript" in packageJSON.devDependencies ? "typescript" : "javascript";
+  configFile.css = "tailwindcss" in packageJSON.devDependencies ? "tailwind" : "common";
+  configFile.framework = "next" in (packageJSON.dependencies ?? {}) ? "nextjs" : "vite";
 
-  fs.writeFileSync("./nextcli.config.json", JSON.stringify(configFile))
+  fs.writeFileSync("./nextcli.config.json", `{
+"framework": "${configFile.framework}", // vite | nextjs
+"language": "${configFile.language}", // javascript | typescript
+"css": "${configFile.css}" // common | modular | tailwind
+
+
+    }
+
+    `)
 }
