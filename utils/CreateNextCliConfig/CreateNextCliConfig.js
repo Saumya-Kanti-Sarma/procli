@@ -13,12 +13,10 @@ export default function CreateNextCliConfig() {
   configFile.framework = "next" in (packageJSON.dependencies ?? {}) ? "nextjs" : "vite";
 
   fs.writeFileSync("./nextcli.config.json", `{
-"framework": "${configFile.framework}", // vite | nextjs
-"language": "${configFile.language}", // javascript | typescript
-"css": "${configFile.css}" // common | modular | tailwind
-
-
-    }
+  "framework": "${configFile.framework}",
+  "language": "${configFile.language}",
+  "css": "${configFile.css}"
+}
 
     `)
 }
